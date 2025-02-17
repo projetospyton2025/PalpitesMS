@@ -1,0 +1,57 @@
+API (adicioine outra api comentada caso no futuro seja nescessário altera)
+API_BASE_URL = “https://loteriascaixa-api.herokuapp.com/api”  # API principal
+# API_BASE_URL = “https://servicebus2.caixa.gov.br/portaldeloterias/api/diadesorte”  # API alternativa (comentada)
+
+
+
+/////////////////////////////////////////
+NÃO ESQUEÇE DA CONFIGURAÇÃO DO REDIS URL... 
+redis_config.py
+.env
+.gitigonore
+
+REDIS_HOST=redis-13833.c336.samerica-east1-1.gce.redns.redis-cloud.com
+REDIS_PORT=13833
+REDIS_PASSWORD=B058xThhTvAbptQa0s25EAGk7A5u473O
+REDIS_DB=0
+FLASK_ENV=development
+#REDIS_URL=redis://localhost:6379/0
+REDIS_URL=redis://default:B058xThhTvAbptQa0s25EAGk7A5u473O@redis-13833.c336.samerica-east1-1.gce.redns.redis-cloud.com:13833
+/////////////////////////////////////////
+
+
+ALEM DE FAZER UM CARD (LADO A LADO), CONFORME A FOTO APRESENTADA E USAR A API APRESENTADA TBM
+
+FAÇA TBM UM OUTRO CARD CHAMADO PALPITAS PEQUENO AGORA PARA INSERIR OS TRES JOGOS COMO PALPITE(OS OUTROS IRÃO APARECER SOMENTE SE O PRIMEIRO ESTIVER PREENCHIDO)
+O USUARIO DEVE DIGITAR TRES JOGOS... COM 06 DEZENAS CADA PARA A MEGA SENA 
+valide este imput, não deve ter numeros repetidos na mesma seguencia de jogos. o que for inniciar com zero que seja..
+01,02 por exemplo
+o ususrio deve preencher um imput com o numero do concurso a ser conferido... 
+
+
+Vou descrever com minhas palavras exatamente o que eu quero.. que o sistema faça ta bom...
+as informações irão vir da api conforme a imagem que compartilhei...
+será inserido tres jogos como papites e estes palpites deverão ser destacado apenas as dezenas sorteadas quando o usuario digitar o numero do concurso...
+a ideia e ter as informações dispostas e atraves delas usar para criar os palpitas.. então depois de criados os palpites... (inserir e ou buscar os resultado atual para comparar com os palpites.)
+a questão de destacar as dezenas sorteadas.. preciso que seja destacado de cores diferents as dezenas que chegaram proximo com a seguinte condição
+
+se por exemplo a dezena sorteada no concurso tal foi 10 e o papite 10 bingo!!!
+agora se a dezena no palpite foi 20 e o resultado for 22 então destaca porque foi um ou dois a mais.. agora para um ou dois a menos use outra cor...
+
+
+
+
+PARA TUDO ISSO..
+-CRIE UM SCRIPT PARA SER RODADO A PARTIR DO DRIVE C:\ DENTRO DA PASTA CHAMADA PALPITES
+-CRIE A ESTRUTURA
+-AS PASTAS/ARQUIVOS
+-ADICIONE AUTOMATICAMENTE OS CONTEUDOS DENTRO DOS ARQUIVOS..
+-CRIE O AMBIENTE VENV E ATIVE ELE
+-CRIE E INSTALE OS REQUIREMENTS.TXT
+-FEED BACK DE TUDO QUE ESTA ACONTECENDO TBM.. NO SCRIPT.. 
+
+
+
+
+
+
