@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mega-Sena Palpites</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="lottery-card">
+            <h1>Mega-Sena</h1>
+            
+            <div id="jogo1Display">
+                <h3>Jogo 1</h3>
+                <div class="numbers"></div>
+            </div>
+            
+            <div id="jogo2Display" style="display: none;">
+                <h3>Jogo 2</h3>
+                <div class="numbers"></div>
+            </div>
+            
+            <div id="jogo3Display" style="display: none;">
+                <h3>Jogo 3</h3>
+                <div class="numbers"></div>
+            </div>
+
+            <div class="sorteio-container">
+                <h3>Último Sorteio - Concurso <span id="concursoNumber"></span></h3>
+                <div class="numbers" id="sorteadosNumbers"></div>
+            </div>
+        </div>
+        
+        <div class="palpites-card">
+            <h2>Seus Palpites</h2>
+            <div class="palpites-input">
+                <div class="jogo">
+                    <label>Jogo 1:</label>
+                    <input type="text" class="palpite-input" id="jogo1" placeholder="13,22,38,46,51,56">
+                </div>
+                <div class="jogo" id="jogo2Container" style="display: none;">
+                    <label>Jogo 2:</label>
+                    <input type="text" class="palpite-input" id="jogo2" placeholder="13,22,38,46,51,56">
+                </div>
+                <div class="jogo" id="jogo3Container" style="display: none;">
+                    <label>Jogo 3:</label>
+                    <input type="text" class="palpite-input" id="jogo3" placeholder="13,22,38,46,51,56">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

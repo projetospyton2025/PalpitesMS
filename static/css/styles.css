@@ -1,0 +1,98 @@
+﻿body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.lottery-card, .palpites-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    flex: 1;
+    min-width: 300px;
+}
+
+#jogo1Display, #jogo2Display, #jogo3Display {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.sorteio-container {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid #eee;
+}
+
+h1, h2, h3 {
+    margin: 0 0 15px 0;
+    color: #333;
+}
+
+.numbers {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 10px 0;
+}
+
+.number {
+    width: 40px;
+    height: 40px;
+    background: #d3d3d3;
+    color: #333;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.palpites-input {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.jogo {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.jogo label {
+    min-width: 60px;
+}
+
+.palpite-input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.matched {
+    background: #00A650 !important;
+    color: white !important;
+}
+
+.close-higher {
+    background: #FFA500 !important;
+    color: white !important;
+}
+
+.close-lower {
+    background: #FFD700 !important;
+    color: black !important;
+}

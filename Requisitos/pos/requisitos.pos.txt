@@ -1,0 +1,339 @@
+Tem duas pastas ambas vazias chamada 
+models e services
+
+Diretório: J:\Meu Drive\ProjetosPython\Loterias\Estrategias\MegaSena\PalpitesMS
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        17/02/2025     18:22                Requisitos
+d-----        17/02/2025     11:53                static
+d-----        17/02/2025     11:53                templates
+d-----        17/02/2025     14:57                config
+d-----        17/02/2025     11:53                models
+d-----        17/02/2025     11:53                services
+d-----        17/02/2025     13:24                venv
+------        17/02/2025     10:07           1096 LICENSE
+------        17/02/2025     10:07             12 README.md
+------        17/02/2025     11:48          10989 palpitesms.ps1
+------        17/02/2025     11:53            869 app.py
+------        17/02/2025     11:53            303 .env
+------        17/02/2025     11:53             37 .gitignore
+------        17/02/2025     18:18            643 requirements.txt
+------        17/02/2025     18:18            465 palpites.ps1
+
+
+PS J:\Meu Drive\ProjetosPython\Loterias\Estrategias\MegaSena\PalpitesMS>
+
+
+#app.py
+from flask import Flask, render_template, request, jsonify
+import redis
+from config.redis_config import RedisConfig
+import requests
+
+app = Flask(__name__)
+
+# Redis Configuration
+redis_config = RedisConfig()
+redis_client = redis.Redis(
+    host=redis_config.REDIS_HOST,
+    port=redis_config.REDIS_PORT,
+    password=redis_config.REDIS_PASSWORD,
+    db=redis_config.REDIS_DB
+)
+
+API_BASE_URL = "https://loteriascaixa-api.herokuapp.com/api"
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/api/concurso/<numero>', methods=['GET'])
+def get_concurso(numero):
+    try:
+        response = requests.get(f"{API_BASE_URL}/megasena/{numero}")
+        return jsonify(response.json())
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+if __name__ == '__main__':
+    app.run(debug=True)
+	
+	
+	
+#redis_config.py	
+	import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+
+class RedisConfig:
+    REDIS_HOST = os.getenv('REDIS_HOST')
+    REDIS_PORT = int(os.getenv('REDIS_PORT'))
+    REDIS_PASSWORD = os.getenv('REDIS_PASSWORD')
+    REDIS_DB = int(os.getenv('REDIS_DB'))
+
+
+#.env
+REDIS_HOST=redis-13833.c336.samerica-east1-1.gce.redns.redis-cloud.com
+REDIS_PORT=13833
+REDIS_PASSWORD=B058xThhTvAbptQa0s25EAGk7A5u473O
+REDIS_DB=0
+FLASK_ENV=development
+REDIS_URL=redis://default:B058xThhTvAbptQa0s25EAGk7A5u473O@redis-13833.c336.samerica-east1-1.gce.redns.redis-cloud.com:13833
+
+
+#gitignore
+venv/
+__pycache__/
+*.pyc
+.env
+
+
+#requirements.txt
+
+flask==2.0.1
+werkzeug==2.0.3
+redis==4.5.4
+python-dotenv==0.19.0
+requests==2.26.0
+
+# (venv) PS J:\Meu DrIve\ProjetosPython\LoterIas\Estrategias\MegaSena\PalpitesMS> pip list
+# Package            Version
+# ------------------ ---------
+# certifi            2025.1.31
+# charset-normalizer 2.0.12
+# click              8.1.8
+# colorama           0.4.6
+# Flask              2.0.1
+# idna               3.10
+# itsdangerous       2.2.0
+# Jinja2             3.1.5
+# MarkupSafe         3.0.2
+# pip                25.0.1
+# python-dotenv      0.19.0
+# redis              4.5.4
+# requests           2.26.0
+# urllib3            1.26.20
+# Werkzeug           2.0.3
+
+#scripts.js
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('jogo1').addEventListener('input', function() {
+        if (this.value.length > 0) {
+            document.getElementById('jogo2Container').style.display = 'flex';
+        }
+    });
+
+    document.getElementById('jogo2').addEventListener('input', function() {
+        if (this.value.length > 0) {
+            document.getElementById('jogo3Container').style.display = 'flex';
+        }
+    });
+});
+
+function validarJogo(numerosStr) {
+    const numeros = numerosStr.split(',').map(n => parseInt(n.trim()));
+    
+    if (numeros.length !== 6) return false;
+    if (!numeros.every(n => n >= 1 && n <= 60)) return false;
+    if (new Set(numeros).size !== 6) return false;
+    
+    return true;
+}
+
+function verificarPalpites() {
+    const concursoNum = document.getElementById('concursoNumber').value;
+    if (!concursoNum) {
+        alert('Por favor, insira o nÃºmero do concurso!');
+        return;
+    }
+
+    fetch(`/api/concurso/${concursoNum}`)
+        .then(response => response.json())
+        .then(data => {
+            const numerosSorteados = data.dezenas.map(n => parseInt(n));
+            
+            for (let i = 1; i <= 3; i++) {
+                const jogoInput = document.getElementById(`jogo${i}`);
+                if (jogoInput.value) {
+                    if (!validarJogo(jogoInput.value)) {
+                        alert(`Jogo ${i} invÃ¡lido! Insira 6 nÃºmeros diferentes entre 01 e 60.`);
+                        return;
+                    }
+                    
+                    const numerosJogo = jogoInput.value.split(',').map(n => parseInt(n.trim()));
+                    verificarAcertos(numerosJogo, numerosSorteados);
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Erro ao buscar dados do concurso!');
+        });
+}
+
+function verificarAcertos(palpite, sorteados) {
+    palpite.forEach(numero => {
+        if (sorteados.includes(numero)) {
+            destacarNumero(numero, 'matched');
+        } else {
+            const diferenca = sorteados.map(s => Math.abs(s - numero));
+            const menorDiferenca = Math.min(...diferenca);
+            if (menorDiferenca <= 2) {
+                const numeroProximo = sorteados[diferenca.indexOf(menorDiferenca)];
+                if (numero > numeroProximo) {
+                    destacarNumero(numero, 'close-lower');
+                } else {
+                    destacarNumero(numero, 'close-higher');
+                }
+            }
+        }
+    });
+}
+
+function destacarNumero(numero, classe) {
+    const elementos = document.querySelectorAll('.number');
+    elementos.forEach(el => {
+        if (parseInt(el.textContent) === numero) {
+            el.classList.add(classe);
+        }
+    });
+}
+
+#styles.css
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.lottery-card, .palpites-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    flex: 1;
+    min-width: 300px;
+}
+
+.numbers {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 20px 0;
+}
+
+.number {
+    width: 40px;
+    height: 40px;
+    background: #00A650;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.palpites-input {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.jogo {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.palpite-input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.matched {
+    background: #00A650 !important;
+}
+
+.close-higher {
+    background: #FFA500 !important;
+}
+
+.close-lower {
+    background: #FFD700 !important;
+}
+
+button {
+    background: #00A650;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #008540;
+}
+
+#index.html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mega-Sena Palpites</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="lottery-card">
+            <h1>Mega-Sena</h1>
+            <div class="concurso-info" id="concursoInfo">
+            </div>
+            <div class="numbers" id="sorteadosNumbers">
+            </div>
+        </div>
+        
+        <div class="palpites-card">
+            <h2>Seus Palpites</h2>
+            <div class="palpites-input">
+                <div class="jogo">
+                    <label>Jogo 1:</label>
+                    <input type="text" class="palpite-input" id="jogo1" placeholder="01,02,03,04,05,06">
+                </div>
+                <div class="jogo" id="jogo2Container" style="display: none;">
+                    <label>Jogo 2:</label>
+                    <input type="text" class="palpite-input" id="jogo2" placeholder="01,02,03,04,05,06">
+                </div>
+                <div class="jogo" id="jogo3Container" style="display: none;">
+                    <label>Jogo 3:</label>
+                    <input type="text" class="palpite-input" id="jogo3" placeholder="01,02,03,04,05,06">
+                </div>
+            </div>
+            <div class="concurso-input">
+                <label>NÃºmero do Concurso:</label>
+                <input type="number" id="concursoNumber" min="1">
+                <button onclick="verificarPalpites()">Verificar</button>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
+
