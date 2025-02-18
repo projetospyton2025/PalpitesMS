@@ -2,6 +2,7 @@
 import redis
 from config.redis_config import RedisConfig
 import requests
+import os
 
 app = Flask(__name__)
 
