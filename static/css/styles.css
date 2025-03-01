@@ -1,37 +1,59 @@
-﻿body {
+﻿/* Base styles */
+:root {
+    --padding-base: 20px;
+    --border-radius-base: 10px;
+    --number-size: 40px;
+    --number-size-small: 30px;
+    --gap-base: 20px;
+}
+
+body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 20px;
+    padding: var(--padding-base);
     background-color: #f0f0f0;
+    min-height: 100vh;
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
-    gap: 20px;
+    gap: var(--gap-base);
     flex-wrap: wrap;
 }
 
 .lottery-card, .palpites-card {
     background: white;
-    border-radius: 10px;
-    padding: 20px;
+    border-radius: var(--border-radius-base);
+    padding: var(--padding-base);
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     flex: 1;
     min-width: 300px;
 }
 
 #jogo1Display, #jogo2Display, #jogo3Display {
-    margin-bottom: 20px;
+    margin-bottom: var(--padding-base);
     padding-bottom: 15px;
     border-bottom: 1px solid #eee;
 }
 
 .sorteio-container {
     margin-top: 30px;
-    padding-top: 20px;
+    padding-top: var(--padding-base);
     border-top: 2px solid #eee;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+h2 {
+    font-size: 20px;
+}
+
+h3 {
+    font-size: 18px;
 }
 
 h1, h2, h3 {
@@ -47,8 +69,8 @@ h1, h2, h3 {
 }
 
 .number {
-    width: 40px;
-    height: 40px;
+    width: var(--number-size);
+    height: var(--number-size);
     background: #d3d3d3;
     color: #333;
     border-radius: 50%;
@@ -56,6 +78,7 @@ h1, h2, h3 {
     align-items: center;
     justify-content: center;
     font-weight: bold;
+    font-size: 16px;
 }
 
 .palpites-input {
@@ -82,6 +105,7 @@ h1, h2, h3 {
     font-size: 14px;
 }
 
+/* Cores de destaque */
 .matched {
     background: #00A650 !important;
     color: white !important;
@@ -95,4 +119,196 @@ h1, h2, h3 {
 .close-lower {
     background: #FFD700 !important;
     color: black !important;
+}
+
+/* Legenda */
+.legenda {
+    margin-top: 30px;
+    padding-top: var(--padding-base);
+    border-top: 1px solid #eee;
+}
+
+.legenda h3 {
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 16px;
+}
+
+.legenda-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.legenda-item .number {
+    width: var(--number-size-small);
+    height: var(--number-size-small);
+    margin-right: 15px;
+    font-size: 14px;
+}
+
+.legenda-item span {
+    color: #666;
+    font-size: 14px;
+}
+
+/* Instruções */
+.instrucaoes {
+    background-color: #f9f9f9;
+    border-radius: var(--border-radius-base);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: var(--padding-base);
+    text-align: left;
+    color: #333;
+    line-height: 35px;
+    margin-bottom: var(--padding-base);
+}
+
+/* Footer */
+footer {
+    color: #161515;
+    text-align: center;
+    padding: 5px;
+    margin-top: 10px;
+}
+
+/* Media Queries */
+
+/* Smart Watch */
+@media screen and (max-width: 280px) {
+    :root {
+        --padding-base: 10px;
+        --number-size: 25px;
+        --number-size-small: 20px;
+        --gap-base: 10px;
+    }
+
+    body {
+        padding: 5px;
+    }
+
+    .container {
+        gap: 10px;
+    }
+
+    .lottery-card, .palpites-card {
+        min-width: auto;
+        padding: 10px;
+    }
+
+    h1 { font-size: 18px; }
+    h2 { font-size: 16px; }
+    h3 { font-size: 14px; }
+
+    .jogo label {
+        min-width: 40px;
+        font-size: 12px;
+    }
+
+    .palpite-input {
+        font-size: 12px;
+        padding: 4px;
+    }
+
+    .legenda-item span {
+        font-size: 12px;
+    }
+}
+
+/* Smartphones */
+@media screen and (min-width: 281px) and (max-width: 480px) {
+    :root {
+        --padding-base: 15px;
+        --number-size: 35px;
+        --number-size-small: 25px;
+    }
+    
+    .container {
+        justify-content: center;
+        text-align: center;
+    }
+    
+    .lottery-card, .palpites-card {
+        min-width: 100%;
+    }
+
+    .numbers {
+        justify-content: center;
+    }
+
+    h1 { font-size: 20px; }
+    h2 { font-size: 18px; }
+    h3 { font-size: 16px; }
+}
+
+/* Tablets */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+    .lottery-card, .palpites-card {
+        min-width: 100%;
+    }
+}
+
+/* Laptops e Desktops menores */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .container {
+        max-width: 900px;
+    }
+}
+
+/* Desktops grandes e Smart TVs */
+@media screen and (min-width: 1025px) {
+    .container {
+        max-width: 1400px;
+    }
+
+    :root {
+        --number-size: 45px;
+        --number-size-small: 35px;
+    }
+
+    h1 { font-size: 28px; }
+    h2 { font-size: 24px; }
+    h3 { font-size: 20px; }
+
+    .palpite-input {
+        font-size: 16px;
+        padding: 10px;
+    }
+}
+
+/* Modo landscape para dispositivos móveis */
+@media screen and (max-height: 480px) and (orientation: landscape) {
+    .container {
+        flex-direction: row;
+    }
+
+    .lottery-card, .palpites-card {
+        min-width: 45%;
+    }
+}
+
+/* High DPI Screens (4K, 5K displays) */
+@media screen and (min-width: 2560px) {
+    :root {
+        --number-size: 60px;
+        --number-size-small: 45px;
+        --padding-base: 30px;
+    }
+
+    .container {
+        max-width: 2000px;
+    }
+
+    h1 { font-size: 36px; }
+    h2 { font-size: 30px; }
+    h3 { font-size: 24px; }
+
+    .palpite-input {
+        font-size: 18px;
+        padding: 12px;
+    }
+
+    .legenda-item span {
+        font-size: 18px;
+    }
 }

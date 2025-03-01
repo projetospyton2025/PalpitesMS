@@ -7,6 +7,20 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
+
+    <div class="instrucaoes">
+            <h2>Instruções de uso:</h2>
+            <ol>
+                 <li>Na seção "Ordem Crescente" defina o numero de <span class="type">Pares</span> e <span class="type">Ímpares</span>.</li>
+                 <li>Selecione a quandidade de jogos para gerar.</li>
+                 <li>Clique no botão "Gerar Jogos".</li>
+                 <li>Faça o downlod dos jogos (opcional).</li>
+            </ol>
+    </div><br />
+
+
+
+
     <div class="container">
         <div class="lottery-card">
             <h1>Mega-Sena</h1>
@@ -35,6 +49,7 @@
         <div class="palpites-card">
             <h2>Seus Palpites</h2>
             <div class="palpites-input">
+                <p>Insira os palpites assim como vc iria inserir em <a href="https://palpitesmegasena.onrender.com/">Palpites 1</a> </p>
                 <div class="jogo">
                     <label>Jogo 1:</label>
                     <input type="text" class="palpite-input" id="jogo1" placeholder="13,22,38,46,51,56">
@@ -48,8 +63,30 @@
                     <input type="text" class="palpite-input" id="jogo3" placeholder="13,22,38,46,51,56">
                 </div>
             </div>
+
+            <div class="legenda">
+                <h3>Legenda das Cores</h3>
+                <div class="legenda-item">
+                    <div class="number matched"></div>
+                    <span>Número exato sorteado</span>
+                </div>
+                <div class="legenda-item">
+                    <div class="number close-higher"></div>
+                    <span>Número até 2 posições <b>acima</b> do sorteado</span>
+                </div>
+                <div class="legenda-item">
+                    <div class="number close-lower"></div>
+                    <span>Número até 2 posições <b>abaixo</b> do sorteado</span>
+                </div>
+            </div>
+
+
         </div>
     </div>
+
+    <footer>Feito por: <i>Márcio Fernando Maia </i>-  Todos os direitos reservado - 2025</footer>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+
 </body>
 </html>
